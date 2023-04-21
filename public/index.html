@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Pagina inicial</title>
+</head>
+
+<body>
+    <header>
+        <form action="/users" method="post">
+            <div>
+                <input type="text" placeholder="Name" id="name" name="name">
+                <input type="text" placeholder="e-mail" id="email" name="email">
+                <button class="btn" type="submit">add</button>
+            </div>
+        </form>
+        <div>
+            <label for="filter">Filtrar</label>
+            <input id="filter" type="text">
+        </div>
+    </header>
+
+    <section>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>E-MAIL</th>
+                    <th>EDIT/DELET</th>
+                </tr>
+            </thead>
+            <tbody id="table"></tbody>
+        </table>
+    </section>
+    <script>
+        const filterInput = document.getElementById('filter');
+        const table = document.getElementById('table');
+        const rows = table.getElementsByTagName('tr');
+
+        filterInput.addEventListener('keyup', function () {
+            const filterValue = filterInput.value.toLowerCase();
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let shouldShowRow = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    const cellText = cells[j].textContent.toLowerCase();
+                    if (cellText.indexOf(filterValue) > -1) {
+                        shouldShowRow = true;
+                        break;
+                    }
+                }
+
+                if (shouldShowRow) {
+                    rows[i].style.display = '';
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+        });
+    </script>
+    <script src="./js/app.js"></script>
+</body>
+
+</html>
