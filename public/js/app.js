@@ -1,44 +1,10 @@
+const url = "PUT YOUR URL HERE" //example: http://localhost:3000
+
 async function getUsers() {
-    const response = await fetch(' https://2a0b-179-251-109-169.ngrok-free.app/users');
+    const response = await fetch(`${url}/users`);
     const data = await response.json();
     for (user of data) {
         addUserInTable(user.id, user.name, user.email);
-    }
-}
-
-async function filterUsers() {
-    try {
-        const options = document.getElementById('opcoes').value
-        const input = document.getElementById('filter').value
-        let values;
-
-        if (options === 'id' && !isNaN(input)) {
-            values = {
-                type: options,
-                id: input
-            }
-        } else if (options === 'name') {
-            values = {
-                type: options,
-                name: input
-            }
-        } else if (options === 'email') {
-            values = {
-                type: options,
-                email: input
-            }
-        } else { alert("Por favor, informe um valor valido") }
-
-        const queryString = JSON.stringify(values)
-        console.log(queryString)
-
-        const response = await fetch(' https://2a0b-179-251-109-169.ngrok-free.app/users' + JSON.stringify(queryString));
-        const data = await response.json();
-        for (user of data) {
-            addUserInTable(user.id, user.name, user.email);
-        }
-    } catch(error) {
-        alert('algo deu errado ' + error)
     }
 }
 
@@ -57,7 +23,7 @@ function createUserByButton() {
             body: JSON.stringify({ name: name, email: email })
         };
 
-        fetch(' https://2a0b-179-251-109-169.ngrok-free.app/users', requestOptions)
+        fetch(`${url}/users`, requestOptions)
             .then(response => {
                 response.json()
             })
@@ -86,7 +52,7 @@ function addUserInTable(id, name, email) {
 }
 
 async function deleteUser(id) {
-    fetch(' https://2a0b-179-251-109-169.ngrok-free.app/users/' + id, { method: 'DELETE' }).then(() => window.location.reload())
+    fetch(url + '/users/' + id, { method: 'DELETE' }).then(() => window.location.reload())
 }
 
 getUsers();
